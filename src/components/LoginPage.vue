@@ -1,7 +1,7 @@
 <template>
     <div class="login">
-            <LeftPart />
-            <RightPart />
+        <LeftPart />
+        <RightPart />
     </div>
 
 </template>
@@ -15,11 +15,14 @@ export default {
     components: {
         LeftPart,
         RightPart
+    },
+    mounted() {
+        if(window.localStorage.getItem('logged-in'))
+        this.$router.push(window.localStorage.getItem('logged-in'));
     }
 
 }
 </script>
 
 <style lang="scss">
-
 </style>

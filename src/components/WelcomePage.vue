@@ -16,7 +16,11 @@
       this.$router.push('/login');
       window.localStorage.removeItem('logged-in');
     }
-  }
+  },
+  mounted() {
+        if(!window.localStorage.getItem('logged-in'))
+        this.$router.push('/');
+    }
   
 }
 </script>

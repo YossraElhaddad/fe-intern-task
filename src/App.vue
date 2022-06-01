@@ -5,7 +5,11 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  mounted(){
+   //get the saved state from the local sorage if a user logged in
+   this.$router.push(window.localStorage.getItem('logged-in') || '/');
+  }
 }
 
 </script>
