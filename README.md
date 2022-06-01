@@ -8,3 +8,5 @@ SocialLinks is a subcomponent of the RightPart that contains the icons and the s
 The file data.js contains the user data who are authorized to log in.
 
 The test file LoginPage.spec.js is originally located inside cypress/integration folder.
+
+The app is deployed at github pages at https://yossraelhaddad.github.io/fe-intern-task/
