@@ -28,15 +28,17 @@ export default {
     },
 
     mounted() {
+        //start animation once the app is mounted
         this.animateSlides();
     },
 
     methods: {
+     //switching between image slides circularly every 2 seconds
         animateSlides() {
             this.timer = setInterval(() => {
                 this.count += 1;
                 this.count = this.count % this.carouselImages.length;
-            }, 2500);
+            }, 2000);
 
         }
     },
@@ -44,9 +46,8 @@ export default {
     computed: {
         currentSlide() {
             return this.carouselImages[this.count];
-        },
-    },
-
+        }
+    }
 
 }
 </script>

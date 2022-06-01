@@ -22,7 +22,7 @@
                name="email"
                placeholder="you@company.com"
                @click="isSubmitted = false"
-               :style="isInvalidEmail &&user.userEmail ? 'border: 1px solid red;' : 'border: 1px solid #cccccc;'"
+               :style="isInvalidEmail && user.userEmail ? 'border: 1px solid red;' : 'border: 1px solid #cccccc;'"
                />
                 <div v-show="user.userEmail && isInvalidEmail">
                    <label class="email-error">{{checkEmail()}}</label>
@@ -41,7 +41,7 @@
                name="password"
                placeholder="6+ Characters"
                @click="isSubmitted = false"
-               :style="isInvalidPassword &&user.userPassword ? 'border: 1px solid red;' : 'border: 1px solid #cccccc;'"
+               :style="user.userPassword && isInvalidPassword ? 'border: 1px solid red;' : 'border: 1px solid #cccccc;'"
                />
 
                <div v-show="user.userPassword && isInvalidPassword">
@@ -89,22 +89,23 @@ export default {
       }
    },
    methods: {
+      //if login info is correct, redirect to welcome page
       route() {
          for (let i = 0; i < data.length; i++) {
             if (this.user.userEmail === data[i].email && this.user.userPassword === data[i].password) { this.isDataCorrect = true; break; }
          }
          if (this.isDataCorrect){
            this.$router.push({ path: `/welcome/${this.user.userEmail}` });
+           //saving in the local storage until the user logs out
            window.localStorage.setItem('logged-in', `/welcome/${this.user.userEmail}`);
-           this.isLoggedIn = true;
          }
-      this.isSubmitted = true;
+      this.isSubmitted = true; //used to show the error if the login info is invalid
       },
 
       checkPassword() {
       const [firstEmailPart] = this.user.userEmail.split('@');
          if (this.user.userPassword.length < 6)
-            {this.passwordCheckError = "Password must be 6 characters or more"; console.log(this.user.userPassword)}
+            this.passwordCheckError = "Password must be 6 characters or more";
 
          else if (!this.user.userPassword.match("(?=.*?[A-Z])"))
             this.passwordCheckError = "Password must contain at least one Uppercase letter";
@@ -132,14 +133,12 @@ export default {
 
    },
    computed: {
-      isDisable() {
-         return this.user.userPassword === "" || !this.user.userEmail === "";
-      },
 
       isInvalidPassword() {
          let result = false;
          const [firstEmailPart] = this.user.userEmail.split('@');
-         if (!this.user.userPassword.includes("^(?=.*[A-Z])(?=.*)[a-zA-Z]{8,}$") || this.user.userPassword.includes(firstEmailPart)) {
+         
+         if (!this.user.userPassword.match("^(?=.*[A-Z])(?=.*[0-9])(?=.{6,})") || this.user.userPassword.includes(firstEmailPart)) {
             result = true;
          }
          return result;
@@ -150,17 +149,12 @@ export default {
          if(!this.user.userEmail.match(emailRegex))
             result = true;
          return result;
-      }
-   },
+      },
+        isDisable() {
+         return (!this.user.userPassword || !this.user.userEmail || this.isInvalidEmail ||this.isInvalidPassword);
+      },
 
-   /*mounted() {
-      if(this.isLoggedIn) {
-         this.$router.push({ path: `/welcome/${this.user.userEmail}` });
-      }
-   }*/
+   },
 
 }
 </script>
-
-<style lang="scss">
-</style>

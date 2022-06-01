@@ -6,6 +6,7 @@
 <script>
  export default {
   name: 'WelcomePage',
+  //props passed from the router
   props: {
     email: String
   },
