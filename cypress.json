@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://localhost:8081/",
+    "baseUrl": "https://yossraelhaddad.github.io/fe-intern-task/",
     "watchForFileChanges": false,
     "defaultCommandTimeout": 20000
 
